@@ -1,0 +1,92 @@
+// В font-size можно записать самый частый размер шрифта на сайте, в font-family - самый частое семейство шрифта.
+
+body {
+  font-family: var(--main-font-family);
+  color: var(--main-color);
+  font-size: rem(14);
+  font-weight: 400;
+  line-height: 1.4;
+  // color: $mainColor;
+  // overflow-wrap: break-word;
+  // word-wrap: break-word;
+}
+
+.wrapper {
+  overflow: hidden;
+  // overflow-x: hidden;
+  // overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+/*------------------*/
+
+// Функция возвращает размер шрифта в rem (переводит из пикселей в rem). По умолчанию в браузерах это 16px. В стилях для конкретного текста можно писать font-size: rem(32); Это пример. Тогда в файле css окажется 2rem. 16px - это размер по умолчанию в браузерах. $size пишем без 'px'.
+
+[class$="__container"],
+[class$="-container"] {
+  max-width: $maxWidth;
+  min-width: $minWidth;
+  padding: 0 rem(15);
+  margin: 0 auto;
+}
+
+.main {
+  flex-grow: 1;
+}
+
+body._lock {
+  overflow: hidden;
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  // color: var(--green);
+  // font-size: rem(12);
+  // min-height: rem(36);
+  // padding: rem(8) rem(24);
+  // border-radius: rem(4);
+  // border: 1px solid var(--green);
+  text-align: center;
+  user-select: none;
+  transition: all 0.3s ease 0s;
+  // @media (any-hover: hover) and (pointer: fine) {
+  // 	&:hover {
+  // 		color: var(--white);
+  // 		background: var(--green);
+  // 	}
+  // }
+}
+
+/*--------- visually-hidden ---------*/
+
+// Класс, который можно использовать для элементов, которые  нужно скрыть, но так, чтобы скринридеры их видели. Например, заголовок, который должен по логике быть, но по дизайн-макету его нет. По скрытым таким способам ссылкам и кнопкам будет при табе происходить фокусировка, что будет не видно.
+// При display: none; ни поисковики, ни скринридеды не видят скрытый элемент. Атрибут hidden может заменить display: none;
+// Если нужно сделать плавное появление и исчезновение выпадающего меню можно использовать visibility и opacity (hidden и 0). Но при этом нужно, чтобы элемент был спозиционирован абсолютно. Иначе он будет продолжать занимать место в разметке. Поисковики будут видеть элемент, скринридеры - нет.
+//Вариант: opacity: 0; pointer-events: none; (и поисковики, и скринридеры видят элемент, элемент занимает место в разметке, как и в варианте выше). Делает то же самое.
+// Исчезновение блока можно сделать с помощью спойлера (за счет height: 0;). В этом случае исчезновение/появление анимируется. И скрытый элемент будут видеть и поисковики, и скринридеры. Но в случае с height: auto; height не анимируется. Нужно, чтобы оба значения height были числами. Плюс нужно убирать паддинги и бордеры (при height: 0 они остаются видны).
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  white-space: nowrap;
+  clip-path: inset(100%);
+  clip: rect(0, 0, 0, 0);
+  overflow: hidden;
+}
+
+/*------------------*/
+
+// Класс none - чтобы временно скрывать блоки во время разработки
+
+.none {
+  display: none !important;
+}
