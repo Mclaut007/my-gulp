@@ -1,4 +1,5 @@
 const gulp = require("gulp");
+const replace = require("gulp-replace");
 const fileInclude = require("gulp-file-include");
 const sass = require("gulp-sass")(require("sass"));
 const sassGlob = require("gulp-sass-glob");
@@ -42,10 +43,16 @@ const plumberNotify = (title) => {
 
 gulp.task("html:dev", function () {
   return gulp
-    .src(["./src/html/**/*.html", "!./src/html/blocks/*.html"])
+    .src(["./src/html/**/*.html", "!./src/html/blocks/**/*.html"])
     .pipe(changed("./build/", { hasChanged: changed.compareContents }))
     .pipe(plumber(plumberNotify("HTML")))
     .pipe(fileInclude(fileIncludeSetting))
+    .pipe(
+      replace(
+        /(?<=src=|href=|srcset=)(['"])(\.(\.)?\/)*(img|images|fonts|css|scss|sass|js|files|audio|video)(\/[^\/'"]+(\/))?([^'"]*)\1/gi,
+        "$1./$4$5$7$1"
+      )
+    )
     .pipe(gulp.dest("./build/"))
     .pipe(browserSync.stream());
 });
@@ -61,6 +68,18 @@ gulp.task("sass:dev", function () {
       .pipe(sass())
       // .pipe(groupMedia())
       // Группировка медиазапросов. Лучше не использовать во время разработки. Потому что, в частности, появляются баги в работе sourceMaps. Плюс, имеет смысл использовать при mobile first (на мой взгляд).
+      .pipe(
+        replace(
+          /(['"]?)(\.\.\/)+(img|images|fonts|css|scss|sass|js|files|audio|video)(\/[^\/'"]+(\/))?([^'"]*)\1/gi,
+          "$1$2$3$4$6$1"
+        )
+      )
+      // .pipe(
+      //   replace(
+      //     /(['"]?)(\.\.\/)+(img|images|fonts|css|scss|sass|js|files|audio|video)(\/[^\/'"]+(\/))?([^'"]*)\1/g,
+      //     "$1$2$3$4$6$1"
+      //   )
+      // )
       .pipe(sourceMaps.write())
       .pipe(gulp.dest("./build/css/"))
       .pipe(browserSync.stream())

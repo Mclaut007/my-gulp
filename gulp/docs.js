@@ -1,4 +1,5 @@
 const gulp = require("gulp");
+const replace = require("gulp-replace");
 
 // HTML
 
@@ -12,7 +13,7 @@ const sass = require("gulp-sass")(require("sass"));
 const sassGlob = require("gulp-sass-glob");
 const autoprefixer = require("gulp-autoprefixer");
 const csso = require("gulp-csso");
-const webpCss = require("gulp-webp-css");
+// const webpCss = require("gulp-webp-css");
 
 // const server = require("gulp-server-livereload");
 const browserSync = require("browser-sync").create();
@@ -31,7 +32,7 @@ const babel = require("gulp-babel");
 // Images
 // gulp-imagemin - сжимает картинки
 const imagemin = require("gulp-imagemin");
-const webp = require("gulp-webp");
+// const webp = require("gulp-webp");
 // Не работает у меня gulp-changed последней версии. В документации не так, как в видео. Установил версию 4.0.3. Заработало
 const changed = require("gulp-changed");
 
@@ -60,10 +61,16 @@ const plumberNotify = (title) => {
 gulp.task("html:docs", function () {
   return (
     gulp
-      .src(["./src/html/**/*.html", "!./src/html/blocks/*.html"])
+      .src(["./src/html/**/*.html", "!./src/html/blocks/**/*.html"])
       .pipe(changed("./docs/"))
       .pipe(plumber(plumberNotify("HTML")))
       .pipe(fileInclude(fileIncludeSetting))
+      .pipe(
+        replace(
+          /(?<=src=|href=|srcset=)(['"])(\.(\.)?\/)*(img|images|fonts|css|scss|sass|js|files|audio|video)(\/[^\/'"]+(\/))?([^'"]*)\1/gi,
+          "$1./$4$5$7$1"
+        )
+      )
       // С webpHTML html-файла не оказывается в финальной папке почему-то. Поэтому отключу
       // .pipe(webpHTML())
       .pipe(htmlclean())
@@ -80,8 +87,14 @@ gulp.task("sass:docs", function () {
       .pipe(plumber(plumberNotify("SCSS")))
       // .pipe(sourceMaps.init())
       .pipe(sassGlob())
-      .pipe(webpCss())
+      // .pipe(webpCss())
       .pipe(sass())
+      .pipe(
+        replace(
+          /(['"]?)(\.\.\/)+(img|images|fonts|css|scss|sass|js|files|audio|video)(\/[^\/'"]+(\/))?([^'"]*)\1/gi,
+          "$1$2$3$4$6$1"
+        )
+      )``
       .pipe(autoprefixer())
       // Группировка медиазапросов. Лучше не использовать во время разработки. Потому что, в частности, появляются баги в работе sourceMaps. Плюс, имеет смысл использовать при mobile first (на мой взгляд).
       .pipe(groupMedia())
@@ -98,7 +111,7 @@ gulp.task("images:docs", function () {
       .src("./src/img/**/*")
       // Не работает у меня gulp-changed последней версии. В документации не так, как в видео Установил версию 4.0.3
       .pipe(changed("./docs/img/"))
-      .pipe(webp())
+      // .pipe(webp())
       .pipe(gulp.dest("./docs/img/"))
       .pipe(gulp.src("./src/img/**/*"))
       .pipe(changed("./docs/img/"))
