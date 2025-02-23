@@ -47,18 +47,59 @@ $minWidthRemWithout: calc($minWidthPx / 16);
 
 // ============ Брейкпонты в ремах ========== //
 
-$deskMiddle: calc(1399.98 / 16 * 1rem);
-$desk: calc(1199.98 / 16 * 1rem);
-$tablet: calc(991.98 / 16 * 1rem);
-$mobile: calc(767.98 / 16 * 1rem);
-$mobileMiddle: calc(575.98 / 16 * 1rem);
-$mobileSmall: calc(479.98 / 16 * 1rem);
+// Для медиазапросов.
+// Эти брейкпойнты - для desktop first. Если делаем верстку mobile first, то брейкпойнты другие - без дробей (992px, 768px и т.д.).
 
-// Брейкпонты в ремах без ремов (без единиц измерения) //
+$deskMiddle: calc(1399.98 / 16 * 1rem); // 87.49875rem
+$desk: calc(1199.98 / 16 * 1rem); // 74.99875rem
+$tablet: calc(991.98 / 16 * 1rem); // 61.99875rem
+$mobile: calc(767.98 / 16 * 1rem); // 47.99875rem
+$mobileMiddle: calc(575.98 / 16 * 1rem); // 35.99875rem
+$mobileSmall: calc(479.98 / 16 * 1rem); // 29.99875rem
+$mobileXS: calc(374.98 / 16 * 1rem); // 23.43625rem
 
-$deskMiddleRemWithout: calc(1399.98 / 16);
-$deskRemWithout: calc(1199.98 / 16);
-$tabletRemWithout: calc(991.98 / 16);
-$mobileRemWithout: calc(767.98 / 16);
-$mobileMiddleRemWithout: calc(575.98 / 16);
-$mobileSmallRemWithout: calc(479.98 / 16);
+// То же, что и выше, но более короткие названия scss-переменных
+
+$xxl: calc(1399.98 / 16 * 1rem); // 87.49875rem
+$xl: calc(1199.98 / 16 * 1rem); // 74.99875rem
+$lg: calc(991.98 / 16 * 1rem); // 61.99875rem
+$md: calc(767.98 / 16 * 1rem); // 47.99875rem
+$sm: calc(575.98 / 16 * 1rem); // 35.99875rem
+$xs: calc(479.98 / 16 * 1rem); // 29.99875rem
+$xxs: calc(374.98 / 16 * 1rem); // 23.43625rem
+
+// При наборе, к примеру, md сработает сниппет и будет вставлено @media (max-width: $md) {}.
+// При наборе, к примеру, mdmin сработает сниппет и будет вставлено @media (max-width: $mdmin) {}.
+
+// Брейкпойнты для mobile first
+
+$deskMiddleMin: calc(1400 / 16 * 1rem); // 87.5rem
+$deskMin: calc(1200 / 16 * 1rem); // 75rem
+$tabletMin: calc(992 / 16 * 1rem); // 62rem
+$mobileMin: calc(768 / 16 * 1rem); // 48rem
+$mobileMiddleMin: calc(576 / 16 * 1rem); // 36rem
+$mobileSmallMin: calc(480 / 16 * 1rem); // 30rem
+$mobileXSMin: calc(375 / 16 * 1rem); // 23.4375rem
+
+// То же, что и выше, но более короткие названия scss-переменных
+
+$xxlmin: calc(1400 / 16 * 1rem); // 87.5rem
+$xlmin: calc(1200 / 16 * 1rem); // 75rem
+$lgmin: calc(992 / 16 * 1rem); // 62rem
+$mdmin: calc(768 / 16 * 1rem); // 48rem
+$smmin: calc(576 / 16 * 1rem); // 36rem
+$xsmin: calc(480 / 16 * 1rem); // 30rem
+$xxsmin: calc(375 / 16 * 1rem); // 23.4375rem
+
+// При наборе, к примеру, mdmin сработает сниппет и будет вставлено @media (max-width: $mdmin) {}.
+
+// Брейкпойнты в ремах без ремов (без единиц измерения). Без дробей
+// Для адаптивных свойств
+
+$deskMiddleRemWithout: calc(1400 / 16);
+$deskRemWithout: calc(1200 / 16);
+$tabletRemWithout: calc(992 / 16);
+$mobileRemWithout: calc(768 / 16);
+$mobileMiddleRemWithout: calc(576 / 16);
+$mobileSmallRemWithout: calc(480 / 16);
+$mobileXSRemWithout: calc(375 / 16);
