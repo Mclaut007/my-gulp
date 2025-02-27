@@ -50,25 +50,23 @@
 //   document.body.classList.add("_pc");
 // }
 
-// ========== Маска для телефона (поля input) на JS ========== //
-
-// Работает для инпутов с классом tel
-
-// import inputPhoneMask from "./modules/input-phone-mask.js";
-
 // ========== Плагин Imaskjs (маска для телефона) ========== //
 
 // import inputPhoneIMask from "./modules/imask";
 
 // inputPhoneIMask();
 
-// import inputPhoneMask from "./modules/input-phone-mask.js";
-
 // ============= Меню-бургер ============= //
 
 // import headerBurgerMenu from "./modules/header-burger-menu";
 
 // headerBurgerMenu();
+
+// ==================== Popup-окна ===================== //
+
+// import findAndActivatePopups from "./modules/popupAll";
+
+// findAndActivatePopups();
 
 // ==================== Popup-окно ===================== //
 
@@ -83,3 +81,9 @@
 // import showHideFixedHeader from "./modules/hide-show-fixed-header";
 
 // showHideFixedHeader();
+
+// ========= Встраиваем яндекс-карту на сайт ========= //
+
+// import createYandexMap from "./modules/yandex-map";
+
+// createYandexMap();
