@@ -2,7 +2,7 @@
 // Закрываем окно тремя способами: при нажатии на кнопку (крестик, например), при клике по пустой области, при нажатии Escape.
 
 function findAndActivatePopups() {
-  // Находим все "кнопки" открытия попапов на странице. Такими кнопками могут быть любые элементы. Например, слайд слайдера. На каждой кнопке у нас будет data-атрибут data-popup-btn-open. Значением атрибута будет являться id, связанного попапа. Например, data-popup-btn-open = "video-gallery-popup-1". То есть значение дата-атрибута кнопки открытия попапа будет совпадать с id попапа, который будет открываться этой кнопкой.
+  // Находим все "кнопки" открытия попапов на странице. Такими кнопками могут быть любые элементы. Например, слайд слайдера. На каждой кнопке у нас будет data-атрибут data-popup-btn-open. Значением атрибута будет являться id, связанного попапа. Например, data-popup-btn-open = "popup-1". То есть значение дата-атрибута кнопки открытия попапа будет совпадать с id попапа, который будет открываться этой кнопкой.
   const popupBtnOpenAll = document.querySelectorAll("[data-popup-btn-open]");
 
   // Находим body, чтобы добавлять ему класс _lock. Он уберет скролл, когда будет появляться попап. Чтобы нельзя было скроллить страницу под попапом.
@@ -29,22 +29,22 @@ function findAndActivatePopups() {
     const popupId = this.dataset.popupBtnOpen;
     const popup = document.querySelector(`#${popupId}`);
 
-    // Если попап с id равным значению дата-атрибута кнопки открытия попапа не найдено, завершаем функцию.
+    // Если попап с id равным значению дата-атрибута кнопки открытия попапа не найден, завершаем функцию.
     if (!popup) return;
 
     popup.classList.add("_open");
     addScrollbarGutter();
     body.classList.add("_lock");
 
-    // Код ниже добавляется для попапов с видео с YouTube. Чтобы при открытии попапа с видео видео сразу запускалось. При закрытии попапа видео будет останавливаться. Но для этого будет аналогичный код дальше. Применяется для элемента iframe.
+    // Код ниже добавляется для попапов с видео с YouTube. Чтобы при открытии попапа с видео видео сразу запускалось. При закрытии попапа видео будет останавливаться. Но для этого будет аналогичный код дальше. Применяется для элемента iframe. Ищем встроенное с YouTube видео через селектор-тег iframe только если на сайте не используется этот тег для каких-то других случаев. Тогда используем другой селектор.
 
-    // if (this.classList.contains("video-gallery__swiper-slide")) {
-    //   const video = popup.querySelector(".video-gallery__popup-video");
-    //   video.contentWindow.postMessage(
-    //     '{"event":"command","func":"playVideo","args":""}',
-    //     "*"
-    //   );
-    // }
+    if (popup.querySelector("iframe")) {
+      const video = popup.querySelector("iframe");
+      video.contentWindow.postMessage(
+        '{"event":"command","func":"playVideo","args":""}',
+        "*"
+      );
+    }
 
     // Чтобы задумка с запуском-остановкой видео работала нужно в html-коде в src для видео добавить ?enablejsapi=1
     // Пример ниже:
@@ -68,25 +68,26 @@ function findAndActivatePopups() {
 
     function closePopup(event) {
       if (
-        !event.target.closest("[class$='__popup-content']") ||
-        event.target.closest("[class$='__popup-close-btn']")
+        !event.target.closest(".popup__content") ||
+        event.target.closest(".popup__close-btn")
       ) {
         popup.classList.remove("_open");
         body.classList.remove("_lock");
         removeScrollbarGutter();
 
-        // === Код ниже добавлятся для попапов с видео. Останавливает проигрывание видео при закрытии попапа.
+        // === Код ниже добавлятся для попапов с видео. Останавливает проигрывание видео при закрытии попапа. Ищем встроенное с YouTube видео через селектор-тег iframe только в том случае, если на сайте не используется этот тег для каких-то других случаев. Тогда используем другой селектор.
 
-        // if (popup.querySelector(".video-gallery__popup-video")) {
-        //   const video = popup.querySelector(".video-gallery__popup-video");
-        //   video.contentWindow.postMessage(
-        //     '{"event":"command","func":"pauseVideo","args":""}',
-        //     "*"
-        //   );
-        // }
+        if (popup.querySelector("iframe")) {
+          const video = popup.querySelector("iframe");
+          video.contentWindow.postMessage(
+            '{"event":"command","func":"pauseVideo","args":""}',
+            "*"
+          );
+        }
+
         popup.removeEventListener("click", closePopup);
         popup.removeEventListener("keydown", closePopup2);
-        // После закрытия попапа все обработчики событий для закрытия попапа удаляем. Ведь они нужны только при открытом попапа. Да и при каждом открытии попапа будут создаваться одинаковые обработчики, которые делают одно и то же.
+        // После закрытия попапа все обработчики событий для закрытия попапа удаляем. Ведь они нужны только при открытом попапе. Да и при каждом открытии попапа будут создаваться одинаковые обработчики, которые делают одно и то же.
       }
     }
 
@@ -101,13 +102,13 @@ function findAndActivatePopups() {
 
         // === Код ниже - для попапов с видео === //
 
-        // if (popup.querySelector(".video-gallery__popup-video")) {
-        //   const video = popup.querySelector(".video-gallery__popup-video");
-        //   video.contentWindow.postMessage(
-        //     '{"event":"command","func":"pauseVideo","args":""}',
-        //     "*"
-        //   );
-        // }
+        if (popup.querySelector("iframe")) {
+          const video = popup.querySelector("iframe");
+          video.contentWindow.postMessage(
+            '{"event":"command","func":"pauseVideo","args":""}',
+            "*"
+          );
+        }
 
         popup.removeEventListener("click", closePopup);
         popup.removeEventListener("keydown", closePopup2);

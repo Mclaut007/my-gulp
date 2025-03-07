@@ -40,7 +40,30 @@ body._lock {
   overflow: hidden;
 }
 
+// Сделаем другие стили для кнопки. Оказывается, flex не нужен. Нужно просто поменять display на block. Тогда между кнопкой и другими элементами не будет зазоры и кнопку можно будет центрировать по горизонтали с помощью margin: 0 auto; Не нужно, как в случае c display: flex; писать width: fit-content (при block элемент
+
 .button {
+  display: block;
+  // color: var(--green);
+  // font-size: rem(12);
+  // min-height: rem(36);
+  // padding: rem(8) rem(24);
+  // border-radius: rem(4);
+  // border: 1px solid var(--green);
+  text-align: center;
+  user-select: none;
+  transition: all 0.3s ease 0s;
+  // @media (any-hover: hover) and (pointer: fine) {
+  // 	&:hover {
+  // 		color: var(--white);
+  // 		background: var(--green);
+  // 	}
+  // }
+}
+
+// .button переименуем в .button-flex. Не будем пока удалять.
+
+.button-flex {
   display: flex;
   justify-content: center;
   align-items: center;
