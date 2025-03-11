@@ -40,49 +40,35 @@ body._lock {
   overflow: hidden;
 }
 
-// Сделаем другие стили для кнопки. Оказывается, flex не нужен. Нужно просто поменять display на block. Тогда между кнопкой и другими элементами не будет зазоры и кнопку можно будет центрировать по горизонтали с помощью margin: 0 auto; Не нужно, как в случае c display: flex; писать width: fit-content (при block элемент
+/* Поменяем стили для кнопки. Оказывается, flex не нужен. Нужно просто поменять display на block (по умолчанию inline-block). Тогда между кнопкой и другими элементами не будет зазоров и кнопку можно будет центрировать по горизонтали с помощью margin: 0 auto; Не нужно, как в случае c display: flex, писать width: fit-content, justify-content: center; align-items: center; text-align: center. У элемента button даже если ему сделать display: block ширина все равно задается содержимым (а не 100% она будет), а содержимое кнопки по горизонтали и вертикали выравнивается по центру. И text-align: center тут делается автоматически. */
 
 .button {
+  /* Поменять значения свойств на те, что по дизайн-макету */
+  font-size: 1rem;
+  min-height: 3rem;
+  padding: 1rem 2rem;
+  border: 1px solid red;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  background: red;
+  color: #fff;
   display: block;
-  // color: var(--green);
-  // font-size: rem(12);
-  // min-height: rem(36);
-  // padding: rem(8) rem(24);
-  // border-radius: rem(4);
-  // border: 1px solid var(--green);
-  text-align: center;
-  user-select: none;
-  transition: all 0.3s ease 0s;
-  // @media (any-hover: hover) and (pointer: fine) {
-  // 	&:hover {
-  // 		color: var(--white);
-  // 		background: var(--green);
-  // 	}
-  // }
-}
-
-// .button переименуем в .button-flex. Не будем пока удалять.
-
-.button-flex {
-  display: flex;
+  /* Строки для display flex ниже не используем. 
+  Мы заменили flex на block */
+  /* display: flex;
   justify-content: center;
   align-items: center;
-  width: fit-content;
-  // color: var(--green);
-  // font-size: rem(12);
-  // min-height: rem(36);
-  // padding: rem(8) rem(24);
-  // border-radius: rem(4);
-  // border: 1px solid var(--green);
-  text-align: center;
+  width: fit-content; */
   user-select: none;
-  transition: all 0.3s ease 0s;
-  // @media (any-hover: hover) and (pointer: fine) {
-  // 	&:hover {
-  // 		color: var(--white);
-  // 		background: var(--green);
-  // 	}
-  // }
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+@media (any-hover: hover) and (pointer: fine) {
+  .button:hover {
+    background-color: transparent;
+    color: red;
+  }
 }
 
 /*--------- visually-hidden ---------*/
